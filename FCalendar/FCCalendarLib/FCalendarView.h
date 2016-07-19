@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "FMonthView.h"
 
+#define WEEKVIEW_HEIGHT 25.0
+#define SPACE_VALUE 3.0
+
 @interface FCalendarView : UIView <UIScrollViewDelegate>
 
-@property (assign, nonatomic) CGRect frame;
-@property (assign, nonatomic) CGRect frameForMonthView;
-@property (strong, nonatomic) FMonthView *displayedMonthView;
+@property (strong, nonatomic) NSCalendar *calendar;
+@property (strong, nonatomic) NSDate *monthDisplay;
+@property (strong, nonatomic) NSString *calendarIndentifier;
 
 @end

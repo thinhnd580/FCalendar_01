@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FCalendarView.h"
 
 @interface FMonthView : UIView <UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (strong, nonatomic) UICollectionView *collectionViewCalendar;
-- (void)setNumberOfCellForCollectionView:(int)numberOfCell;
+@property (strong, nonatomic) NSCalendar *calendar;
+@property (strong, nonatomic) NSDate *month;
+- (void)setMonthDisplay:(NSDate*)month;
+- (void)drawDate;
 
 @end
