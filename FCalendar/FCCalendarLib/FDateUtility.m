@@ -35,4 +35,16 @@
     return NO;
 }
 
+- (BOOL)isEqualWithDate :(NSDate*)date {
+    if (date == nil) {
+        return NO;
+    }
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd/MM/yyyy"];
+    if ([[formatter stringFromDate:self] isEqualToString:[formatter stringFromDate:date]]) {
+        return YES;
+    }
+    return NO;
+}
+
 @end

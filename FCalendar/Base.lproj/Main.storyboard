@@ -17,11 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NRC-Tw-LKS" customClass="FCalendarView">
-                                <rect key="frame" x="0.0" y="100" width="320" height="223"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NRC-Tw-LKS">
+                                <rect key="frame" x="0.0" y="100" width="320" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="223" id="ZNK-fY-IPA"/>
+                                    <constraint firstAttribute="height" constant="300" id="ZNK-fY-IPA"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -33,6 +33,9 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="calView" destination="NRC-Tw-LKS" id="PBY-Rr-XRp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
