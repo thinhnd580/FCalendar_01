@@ -14,6 +14,7 @@
 @property (strong, nonatomic) FMonthView *monthView;
 @property (strong, nonatomic) WeekView *weekView;
 @property (strong, nonatomic) UIView *infoView;
+@property (strong, nonatomic) UIView *containerView;
 @property (strong, nonatomic) UILabel *lbInfor;
 @property (strong, nonatomic) NSDateFormatter *formatter;
 @property (strong, nonatomic) UISwipeGestureRecognizer *swipeLeft;
@@ -64,6 +65,20 @@
     [self addSubview:self.infoView];
     self.lbInfor.frame = self.infoView.bounds;
     [self.infoView addSubview:self.lbInfor];
+    //Create 2 button to change month
+    //Button next month
+    UIButton *btnPreviousMonth = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, INFOVIEW_HEIGHT, INFOVIEW_HEIGHT)];
+    [btnPreviousMonth setTitle:@"<" forState:UIControlStateNormal];
+    [btnPreviousMonth setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [btnPreviousMonth addTarget:self action:@selector(moveToPreviousMonth) forControlEvents:UIControlEventTouchUpInside];
+    //Button previous month
+    UIButton *btnNextMonth = [[UIButton alloc] initWithFrame:CGRectMake(self.infoView.bounds.size.width - INFOVIEW_HEIGHT, 0, INFOVIEW_HEIGHT, INFOVIEW_HEIGHT)];
+    [btnNextMonth setTitle:@">" forState:UIControlStateNormal];
+    [btnNextMonth setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [btnNextMonth addTarget:self action:@selector(moveToNextMonth) forControlEvents:UIControlEventTouchUpInside];
+    //Add 2 buttons
+    [self.infoView addSubview:btnNextMonth];
+    [self.infoView addSubview:btnPreviousMonth];
     //Create WeekView
     self.weekView = [[WeekView alloc] initWithFrame:CGRectMake(0, INFOVIEW_HEIGHT, frame.size.width, WEEKVIEW_HEIGHT)];
     [self.weekView setCurrentCalendar:self.calendar];
@@ -94,14 +109,37 @@
             [weakSelf.delegate didSelectDate:date];
         }
     };
-    [self addNewMonthView];
-    [self addSubview:self.monthView];
+    CGRect frame;
+    if (self.dayViewHeight < 0) {
+        frame = CGRectMake(0, self.bounds.origin.y + WEEKVIEW_HEIGHT + INFOVIEW_HEIGHT, self.bounds.size.width , self.bounds.size.height - WEEKVIEW_HEIGHT - INFOVIEW_HEIGHT);
+    } else {
+        frame = CGRectMake(0, self.bounds.origin.y + WEEKVIEW_HEIGHT + INFOVIEW_HEIGHT, self.bounds.size.width , (self.dayViewHeight) * 6);
+    }
+    //create containerView
+    self.containerView = [[UIView alloc] initWithFrame:frame];
+    [self.containerView setBackgroundColor:[UIColor yellowColor]];
+    [self addSubview:self.containerView];
+    //After reDrawMonthView , self.monthView will be init new
+    [self reDrawMonthView];
+    [self.containerView addSubview:self.monthView];
 }
 
+- (void)reDrawMonthView {
+    //After reDrawMonthView , self.monthView will be init new
+    self.monthView = [[FMonthView alloc] initWithFrame:self.containerView.bounds calendar:self.calendar showDayOff:self.showDayOff dayViewHeight:self.dayViewHeight];
+    self.monthView.month = self.monthDisplay;
+    self.lbInfor.text = [self.formatter stringFromDate:self.monthDisplay];
+    [self.monthView createView];
+    [self.monthView didSelectDateWithCompletion:self.callBackBlock];
+}
+
+#pragma mark - Swipe handler
 -(void)handleSwipe:(UISwipeGestureRecognizer *)recognizer {
     //Animation
     CATransition *transition = [CATransition animation];
-    transition.duration = 0.5;
+    transition.delegate = self;
+    transition.duration = 0.25;
+    transition.removedOnCompletion = YES;
     transition.type = kCATransitionPush;
     [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
     //Swipe handle
@@ -113,23 +151,25 @@
         transition.subtype = kCATransitionFromRight;
         self.monthDisplay = [self.monthView.month nextMonth];
     }
-    [self.layer addAnimation:transition forKey:nil];
-    [self addNewMonthView];
-    //remove subview
-    for (UIView *view in self.subviews) {
-        if (view != self.weekView && view != self.infoView) {
-            [view removeFromSuperview];
-        }
+    //After reDrawMonthView , self.monthView will be init new
+    [self reDrawMonthView];
+    [self.containerView.layer addAnimation:transition forKey:nil];
+    for (UIView *view in self.containerView.subviews) {
+        [view removeFromSuperview];
     }
-    [self addSubview:self.monthView];
+    [self.containerView addSubview:self.monthView];
+    //Call back delegate
+    if (self.delegate) {
+        [self.delegate didScrollToMonth:self.monthDisplay];
+    }
 }
 
-- (void)addNewMonthView {
-    self.monthView = [[FMonthView alloc] initWithFrame:CGRectMake(0, self.bounds.origin.y + WEEKVIEW_HEIGHT + INFOVIEW_HEIGHT, self.bounds.size.width , self.bounds.size.height - WEEKVIEW_HEIGHT - INFOVIEW_HEIGHT) calendar:self.calendar showDayOff:self.showDayOff dayViewHeight:self.dayViewHeight];
-    self.monthView.month = self.monthDisplay;
-    self.lbInfor.text = [self.formatter stringFromDate:self.monthDisplay];
-    [self.monthView createView];
-    [self.monthView didSelectDateWithCompletion:self.callBackBlock];
+#pragma mark - Call to change move
+- (void)moveToNextMonth {
+    [self handleSwipe:self.swipeLeft];
+}
+- (void)moveToPreviousMonth {
+    [self handleSwipe:self.swipeRight];
 }
 
 @end

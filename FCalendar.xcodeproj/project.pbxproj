@@ -21,6 +21,7 @@
 		40AF45B71D35F6850059FF63 /* FMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40AF45B61D35F6850059FF63 /* FMonthView.m */; };
 		40D29C701D38E2DB00528061 /* FDateUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D29C6F1D38E2DB00528061 /* FDateUtility.m */; };
 		40EB38951D407AB800000D84 /* FCalendarSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EB38941D407AB800000D84 /* FCalendarSingleton.m */; };
+		40EB38981D40BFD100000D84 /* FDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EB38971D40BFD100000D84 /* FDayView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,8 @@
 		40D29C6F1D38E2DB00528061 /* FDateUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDateUtility.m; path = FCCalendarLib/FDateUtility.m; sourceTree = "<group>"; };
 		40EB38931D407AB800000D84 /* FCalendarSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCalendarSingleton.h; sourceTree = "<group>"; };
 		40EB38941D407AB800000D84 /* FCalendarSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCalendarSingleton.m; sourceTree = "<group>"; };
+		40EB38961D40BFD100000D84 /* FDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDayView.h; path = FCCalendarLib/FDayView.h; sourceTree = "<group>"; };
+		40EB38971D40BFD100000D84 /* FDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDayView.m; path = FCCalendarLib/FDayView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				40063A9E1D378F4F004262BE /* Cell */,
+				40EB38961D40BFD100000D84 /* FDayView.h */,
+				40EB38971D40BFD100000D84 /* FDayView.m */,
 				40AF45B21D35EC8F0059FF63 /* FCalendarView.h */,
 				40AF45B31D35EC8F0059FF63 /* FCalendarView.m */,
 				40AF45B51D35F6850059FF63 /* FMonthView.h */,
@@ -319,6 +324,7 @@
 			files = (
 				400FC7431D35E44900D2C1AF /* ViewController.m in Sources */,
 				401D45171D3DFD3B0033F35F /* WeekView.m in Sources */,
+				40EB38981D40BFD100000D84 /* FDayView.m in Sources */,
 				40D29C701D38E2DB00528061 /* FDateUtility.m in Sources */,
 				40EB38951D407AB800000D84 /* FCalendarSingleton.m in Sources */,
 				40AF45B71D35F6850059FF63 /* FMonthView.m in Sources */,

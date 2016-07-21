@@ -32,11 +32,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark - Calendar delegate
 - (void)didSelectDate:(NSDate *)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"dd/MM/yyyy"];
     NSLog(@"Date Selected : %@",[formatter stringFromDate:date]);
+}
+
+- (void)didScrollToMonth:(NSDate *)date {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM/yyyy"];
+    NSLog(@"Month display : %@",[formatter stringFromDate:date]);
 }
 
 @end
