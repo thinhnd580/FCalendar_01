@@ -16,8 +16,12 @@
 		400FC74B1D35E44900D2C1AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 400FC7491D35E44900D2C1AF /* LaunchScreen.storyboard */; };
 		400FC7561D35E44A00D2C1AF /* FCalendarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 400FC7551D35E44A00D2C1AF /* FCalendarTests.m */; };
 		400FC7611D35E44A00D2C1AF /* FCalendarUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 400FC7601D35E44A00D2C1AF /* FCalendarUITests.m */; };
+		401D45171D3DFD3B0033F35F /* WeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 401D45161D3DFD3B0033F35F /* WeekView.m */; };
+		401D451A1D3E14AD0033F35F /* WeekCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 401D45191D3E14AD0033F35F /* WeekCell.m */; };
 		40AF45B41D35EC8F0059FF63 /* FCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40AF45B31D35EC8F0059FF63 /* FCalendarView.m */; };
 		40AF45B71D35F6850059FF63 /* FMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40AF45B61D35F6850059FF63 /* FMonthView.m */; };
+		40D29C6D1D38BDD200528061 /* DayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D29C6C1D38BDD200528061 /* DayCell.m */; };
+		40D29C701D38E2DB00528061 /* FDateUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D29C6F1D38E2DB00528061 /* FDateUtility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,10 +60,18 @@
 		400FC75C1D35E44A00D2C1AF /* FCalendarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FCalendarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		400FC7601D35E44A00D2C1AF /* FCalendarUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FCalendarUITests.m; sourceTree = "<group>"; };
 		400FC7621D35E44A00D2C1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		401D45151D3DFD3B0033F35F /* WeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeekView.h; path = FCCalendarLib/WeekView.h; sourceTree = "<group>"; };
+		401D45161D3DFD3B0033F35F /* WeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeekView.m; path = FCCalendarLib/WeekView.m; sourceTree = "<group>"; };
+		401D45181D3E14AD0033F35F /* WeekCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeekCell.h; path = FCCalendarLib/WeekCell.h; sourceTree = "<group>"; };
+		401D45191D3E14AD0033F35F /* WeekCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeekCell.m; path = FCCalendarLib/WeekCell.m; sourceTree = "<group>"; };
 		40AF45B21D35EC8F0059FF63 /* FCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FCalendarView.h; path = FCCalendarLib/FCalendarView.h; sourceTree = "<group>"; };
 		40AF45B31D35EC8F0059FF63 /* FCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FCalendarView.m; path = FCCalendarLib/FCalendarView.m; sourceTree = "<group>"; };
 		40AF45B51D35F6850059FF63 /* FMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMonthView.h; path = FCCalendarLib/FMonthView.h; sourceTree = "<group>"; };
 		40AF45B61D35F6850059FF63 /* FMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMonthView.m; path = FCCalendarLib/FMonthView.m; sourceTree = "<group>"; };
+		40D29C6B1D38BDD200528061 /* DayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DayCell.h; path = FCCalendarLib/DayCell/DayCell.h; sourceTree = "<group>"; };
+		40D29C6C1D38BDD200528061 /* DayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DayCell.m; path = FCCalendarLib/DayCell/DayCell.m; sourceTree = "<group>"; };
+		40D29C6E1D38E2DB00528061 /* FDateUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDateUtility.h; path = FCCalendarLib/FDateUtility.h; sourceTree = "<group>"; };
+		40D29C6F1D38E2DB00528061 /* FDateUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDateUtility.m; path = FCCalendarLib/FDateUtility.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,11 +99,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		40063A9E1D378F4F004262BE /* DayCell */ = {
+		40063A9E1D378F4F004262BE /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				40D29C6B1D38BDD200528061 /* DayCell.h */,
+				40D29C6C1D38BDD200528061 /* DayCell.m */,
+				401D45181D3E14AD0033F35F /* WeekCell.h */,
+				401D45191D3E14AD0033F35F /* WeekCell.m */,
 			);
-			name = DayCell;
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		400FC72F1D35E44800D2C1AF = {
@@ -160,13 +176,17 @@
 		40AF45B11D35EBBC0059FF63 /* FCalendarLib */ = {
 			isa = PBXGroup;
 			children = (
-				40063A9E1D378F4F004262BE /* DayCell */,
+				40063A9E1D378F4F004262BE /* Cell */,
 				40AF45B21D35EC8F0059FF63 /* FCalendarView.h */,
 				40AF45B31D35EC8F0059FF63 /* FCalendarView.m */,
 				40AF45B51D35F6850059FF63 /* FMonthView.h */,
 				40AF45B61D35F6850059FF63 /* FMonthView.m */,
+				401D45151D3DFD3B0033F35F /* WeekView.h */,
+				401D45161D3DFD3B0033F35F /* WeekView.m */,
 				40063A9B1D374086004262BE /* InfinityScrollView.h */,
 				40063A9C1D374086004262BE /* InfinityScrollView.m */,
+				40D29C6E1D38E2DB00528061 /* FDateUtility.h */,
+				40D29C6F1D38E2DB00528061 /* FDateUtility.m */,
 			);
 			name = FCalendarLib;
 			sourceTree = "<group>";
@@ -303,9 +323,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				400FC7431D35E44900D2C1AF /* ViewController.m in Sources */,
+				401D45171D3DFD3B0033F35F /* WeekView.m in Sources */,
+				40D29C701D38E2DB00528061 /* FDateUtility.m in Sources */,
 				40AF45B71D35F6850059FF63 /* FMonthView.m in Sources */,
 				40AF45B41D35EC8F0059FF63 /* FCalendarView.m in Sources */,
 				40063A9D1D374086004262BE /* InfinityScrollView.m in Sources */,
+				40D29C6D1D38BDD200528061 /* DayCell.m in Sources */,
+				401D451A1D3E14AD0033F35F /* WeekCell.m in Sources */,
 				400FC7401D35E44900D2C1AF /* AppDelegate.m in Sources */,
 				400FC73D1D35E44900D2C1AF /* main.m in Sources */,
 			);
