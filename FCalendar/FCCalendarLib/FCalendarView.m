@@ -158,8 +158,8 @@
         [view removeFromSuperview];
     }
     [self.containerView addSubview:self.monthView];
-    //Call back delegate
-    if (self.delegate) {
+    if ([self.delegate respondsToSelector:@selector(didScrollToMonth:)]) {
+        // The object does implement the method, so you can safely call it.
         [self.delegate didScrollToMonth:self.monthDisplay];
     }
 }
