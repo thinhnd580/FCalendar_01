@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface NSDate (NextAndPreviousDate)
+
 - (NSDate*)nextMonth;
 - (NSDate*)previousMonth;
 - (NSUInteger)numberOfDayInMonth;
 - (BOOL)inSameMonthWithDate:(NSDate*)date;
+- (BOOL)isEqualWithDate:(NSDate*)date;
+
 @end

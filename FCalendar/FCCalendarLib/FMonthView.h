@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "FCalendarView.h"
 
-@interface FMonthView : UIView <UICollectionViewDelegate,UICollectionViewDataSource>
+@interface FMonthView : UIView
 
-@property (strong, nonatomic) UICollectionView *collectionViewCalendar;
 @property (strong, nonatomic) NSCalendar *calendar;
+@property (assign, nonatomic) CGFloat dayViewHeight;
 @property (strong, nonatomic) NSDate *month;
-- (void)setMonthDisplay:(NSDate*)month;
-- (void)drawDate;
+- (id)initWithFrame:(CGRect)frame calendar:(NSCalendar*)calendar showDayOff:(BOOL)showDayOff dayViewHeight:(CGFloat)height;
+@property (assign, nonatomic) BOOL showDayOff;
+- (void)didSelectDateWithCompletion:(void(^)(NSDate* dateSelected,NSInteger swapView))callBackBlock;
+- (void)createView;
 
 @end

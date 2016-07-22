@@ -24,7 +24,7 @@
     self.arrWeekDayString = [[NSMutableArray alloc] init];
     //Create collection view flow layout
     UICollectionViewFlowLayout* flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake(frame.size.width / 7.0 - (SPACE_VALUE * 3), frame.size.height);
+    flowLayout.itemSize = CGSizeMake((frame.size.width / 7.0) - (SPACE_VALUE * 2), frame.size.height);
     flowLayout.minimumInteritemSpacing = SPACE_VALUE;
     flowLayout.minimumLineSpacing = SPACE_VALUE;
     flowLayout.sectionInset = UIEdgeInsetsMake(0, SPACE_VALUE, 0, SPACE_VALUE);
