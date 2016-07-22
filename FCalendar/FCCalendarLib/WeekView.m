@@ -24,14 +24,14 @@
     self.arrWeekDayString = [[NSMutableArray alloc] init];
     //Create collection view flow layout
     UICollectionViewFlowLayout* flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake((frame.size.width / 7.0) - (SPACE_VALUE * 2), frame.size.height);
+    flowLayout.itemSize = CGSizeMake(((frame.size.width - (SPACE_VALUE *2)) / 7.0) - SPACE_VALUE * 2, frame.size.height);
     flowLayout.minimumInteritemSpacing = SPACE_VALUE;
-    flowLayout.minimumLineSpacing = SPACE_VALUE;
+//    flowLayout.minimumLineSpacing = SPACE_VALUE;
     flowLayout.sectionInset = UIEdgeInsetsMake(0, SPACE_VALUE, 0, SPACE_VALUE);
     //Create collectionview
     self.collectionViewWeek = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flowLayout];
     [self.collectionViewWeek registerClass:UICollectionViewCell.self forCellWithReuseIdentifier:@"WeekCell"];
-    [self.collectionViewWeek setBackgroundColor:[UIColor yellowColor]];
+    [self.collectionViewWeek setBackgroundColor:[UIColor blackColor]];
     [self addSubview:self.collectionViewWeek];
     self.collectionViewWeek.dataSource = self;
     self.collectionViewWeek.delegate = self;
@@ -50,7 +50,7 @@
     NSDate *beginDateInCurrentCalendar =  [firstDayInMonthDate dateByAddingTimeInterval:-(86400 * (firstWeekDayInMonth - 1))];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setLocale:[NSLocale currentLocale]];
-    [formatter setDateFormat:@"EEE"];
+    [formatter setDateFormat:@"EE"];
     for (int i = 0; i < 7; i++) {
         NSDate *date = [beginDateInCurrentCalendar dateByAddingTimeInterval:(86400 * i)];
         [self.arrWeekDayString addObject:[formatter stringFromDate:date]];
@@ -71,10 +71,15 @@
     WeekCell *cell = (WeekCell*)[self.collectionViewWeek dequeueReusableCellWithReuseIdentifier:@"WeekCell" forIndexPath:indexPath];
     //Add label
     UILabel *label = [[UILabel alloc] initWithFrame:cell.bounds];
+    [label setTextColor:[UIColor whiteColor]];
     [label setTextAlignment:NSTextAlignmentCenter];
     label.text = [self.arrWeekDayString objectAtIndex:indexPath.row];
     [cell addSubview:label];
     return cell;
+}
+
+- (void)dealloc {
+    NSLog(@"I'm WEEK and dead");
 }
 
 @end
