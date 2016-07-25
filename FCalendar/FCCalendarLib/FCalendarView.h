@@ -16,7 +16,9 @@
 #define SPACE_VALUE 0.25
 
 @protocol FCalendarDelegate <NSObject>
+
 - (void)didSelectDate:(NSDate*)date;
+@optional
 - (void)didScrollToMonth:(NSDate*)date;
 @end
 
