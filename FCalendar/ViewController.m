@@ -11,21 +11,19 @@
 #import "FDateUtility.h"
 
 @interface ViewController () <FCalendarDelegate>
-@property (weak, nonatomic) IBOutlet UIView *calView;
+@property (weak, nonatomic) IBOutlet FCalendarView *calView;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    FCalendarView *calendar = [[FCalendarView alloc] initWithFrame:self.calView.bounds calendar:nil monthDisplay:nil dateSelected:[NSDate date] showDayOff:YES dayViewHeight:-1];
-    calendar.delegate = self;
-    [self.calView addSubview:calendar];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self.calView setDataWithCalendar:nil monthDisplay:[NSDate date] dateSelected:nil showDayOff:YES dayViewHeight:-1];
+    self.calView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {

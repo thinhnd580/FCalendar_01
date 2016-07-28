@@ -15,5 +15,6 @@
 - (NSUInteger)numberOfDayInMonth;
 - (BOOL)inSameMonthWithDate:(NSDate*)date;
 - (BOOL)isEqualWithDate:(NSDate*)date;
-
++ (NSDate*)dateBeginningOfMonth:(NSDate*)month inCalendar:(NSCalendar*)calendar;
++ (NSDate*)firstDateInMonth:(NSDate*)month;
 @end

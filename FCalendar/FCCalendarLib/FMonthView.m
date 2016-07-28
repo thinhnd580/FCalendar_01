@@ -12,6 +12,7 @@
 
 @interface FMonthView ()
 @property (strong, nonatomic) NSMutableArray *arrDays;
+@property (strong, nonatomic) NSMutableArray *arrDayViews;
 @property (strong, nonatomic) NSDateFormatter *formatter;
 @property (strong, nonatomic) UIColor *dayOffColor;
 @property (strong, nonatomic) FDayView *dayViewSelected;
@@ -21,15 +22,19 @@
 @implementation FMonthView
 
 #pragma mark - Init
-- (id)initWithFrame:(CGRect)frame calendar:(NSCalendar*)calendar showDayOff:(BOOL)showDayOff dayViewHeight:(CGFloat)height {
-    self = [super initWithFrame:frame];
+- (id)initWithCalendar:(NSCalendar*)calendar showDayOff:(BOOL)showDayOff dayViewHeight:(CGFloat)height {
+    self = [super init];
     if (self) {
         //init code
         self.arrDays = [[NSMutableArray alloc] init];
+        self.arrDayViews = [[NSMutableArray alloc] init];
         [self setBackgroundColor:[UIColor grayColor]];
         self.calendar = calendar;
         self.showDayOff = showDayOff;
         self.dayViewHeight = height;
+        //Set DateFormatter
+        self.formatter = [[NSDateFormatter alloc] init];
+        [self.formatter setDateFormat:@"dd"];
     }
     return self;
 }
@@ -46,28 +51,36 @@
     if (self.dayViewHeight < 0) {
         self.dayViewHeight = (self.bounds.size.height / 6);
     }
-    //Set DateFormatter
-    self.formatter = [[NSDateFormatter alloc] init];
-    [self.formatter setDateFormat:@"dd"];
-    //Create datecompoment of firstday in month
-    NSDateComponents *firstDayInMonthComp = [self.calendar components:NSCalendarUnitMonth|NSCalendarUnitYear fromDate:self.month];
-    [firstDayInMonthComp setDay:1];
-    //Get NSDate form first day in month compoment above
-    NSDate *firstDayInMonthDate  = [self.calendar dateFromComponents:firstDayInMonthComp];
-    //Get first weekday in month to caculate day start in current calendar
-    NSInteger firstWeekDayInMonth = [self.calendar ordinalityOfUnit:NSCalendarUnitWeekday inUnit:NSCalendarUnitWeekOfMonth forDate:firstDayInMonthDate];
     //day start in current calendar
-    NSDate *beginDateInCurrentCalendar = [firstDayInMonthDate dateByAddingTimeInterval:-(86400 * (firstWeekDayInMonth - 1))];
-    NSInteger randomIndex = arc4random_uniform(41);
+    NSDate *beginDateInCurrentCalendar = [NSDate dateBeginningOfMonth:self.month inCalendar:self.calendar];
     //Add day to Array
     [self.arrDays removeAllObjects];
+    [self.arrDayViews removeAllObjects];
     NSInteger tag = 0;
+    FDayView *preDayView;
     for (NSInteger i = 0; i < 6; i++) {
         for (NSInteger j = 0; j < 7; j++) {
             NSDate *date = [beginDateInCurrentCalendar dateByAddingTimeInterval:(86400 * tag)];
             [self.arrDays addObject:date];
-            //create Day with uibutton type
-            FDayView *dayView = [[FDayView alloc] initWithFrame:CGRectMake((self.bounds.size.width / 7) * j + SPACE_VALUE, self.dayViewHeight * i, (self.bounds.size.width / 7) - (SPACE_VALUE * 2), self.dayViewHeight - (SPACE_VALUE * 2))];
+            FDayView *dayView = [[FDayView alloc] init];
+            [self addSubview:dayView];
+            //DayView Layout
+            [dayView setTranslatesAutoresizingMaskIntoConstraints:NO];
+            CGFloat scaleMultiplier = 1.0 / 7.0;
+            [self addConstraint:[NSLayoutConstraint constraintWithItem:dayView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:scaleMultiplier constant:-(SPACE_VALUE *2)]];
+            [self addConstraint:[NSLayoutConstraint constraintWithItem:dayView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:scaleMultiplier constant:(self.dayViewHeight - (SPACE_VALUE * 2))]];
+            if (j == 0) {
+                [self addConstraint:[NSLayoutConstraint constraintWithItem:dayView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeading multiplier:1.0 constant:(SPACE_VALUE * 2)]];
+            } else {
+                preDayView = [self.arrDayViews objectAtIndex:tag - 1];
+                [self addConstraint:[NSLayoutConstraint constraintWithItem:dayView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:preDayView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:(SPACE_VALUE * 2)]];
+            }
+            if (i == 0) {
+                [self addConstraint:[NSLayoutConstraint constraintWithItem:dayView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:(SPACE_VALUE * 2)]];
+            } else {
+                preDayView = [self.arrDayViews objectAtIndex:(i - 1)*7];
+                [self addConstraint:[NSLayoutConstraint constraintWithItem:dayView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:preDayView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:(SPACE_VALUE * 2)]];
+            }
             if ([date inSameMonthWithDate:self.month]) {
                 [dayView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             } else {
@@ -77,24 +90,51 @@
             if ([date isEqualWithDate:[NSDate date]]) {
                 [dayView setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
             }
-            FCalendarSingleton *singleton  = [FCalendarSingleton sharedInstance];
+            FCalendarSingleton *singleton = [FCalendarSingleton sharedInstance];
             if ([date isEqualWithDate:singleton.dateSelected] && [self.month inSameMonthWithDate:singleton.dateSelected]) {
-                [dayView.layer setBorderWidth:0.5];
+                [dayView.layer setBorderWidth:1];
                 self.dayViewSelected = dayView;
-            }
-            if (tag == randomIndex && [self.month inSameMonthWithDate:singleton.dateSelected]) {
-                [dayView showSubView:YES];
             }
             [dayView setTitle:[self.formatter stringFromDate:date] forState:UIControlStateNormal];
             dayView.tag = tag;
             [dayView addTarget:self action:@selector(dayViewClick:) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:dayView];
             tag++;
+            [self.arrDayViews addObject:dayView];
+            [self layoutSubviews];
         }
     }
 }
 
+- (void)reloadDayView {
+    [self.arrDays removeAllObjects];
+    NSDate *beginDateInCurrentCalendar = [NSDate dateBeginningOfMonth:self.month inCalendar:self.calendar];
+    NSUInteger index = 0;
+    for (FDayView *dayView in self.arrDayViews) {
+        NSDate *date = [beginDateInCurrentCalendar dateByAddingTimeInterval:(86400 * index)];
+        [self.arrDays addObject:date];
+        if ([date inSameMonthWithDate:self.month]) {
+            [dayView setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        } else {
+            [dayView setTitleColor:self.dayOffColor forState:UIControlStateNormal];
+        }
+        //Hightlight today
+        if ([date isEqualWithDate:[NSDate date]]) {
+            [dayView setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        }
+        FCalendarSingleton *singleton = [FCalendarSingleton sharedInstance];
+        if ([date isEqualWithDate:singleton.dateSelected] && [self.month inSameMonthWithDate:singleton.dateSelected]) {
+            [dayView.layer setBorderWidth:1];
+            self.dayViewSelected = dayView;
+        } else {
+            [dayView.layer setBorderWidth:0];
+        }
+        [dayView setTitle:[self.formatter stringFromDate:date] forState:UIControlStateNormal];
+        index++;
+    }
+}
+
 - (void)dayViewClick:(FDayView*)sender {
+    [sender.layer setBorderWidth:1];
     [self.dayViewSelected.layer setBorderWidth:0];
     self.dayViewSelected = sender;
     NSDate *date = [self.arrDays objectAtIndex:sender.tag];
@@ -111,7 +151,6 @@
             self.completionBlock(date,0);
         }
     } else {
-        [self.dayViewSelected.layer setBorderWidth:1];
         self.completionBlock(date,-1);
     }
 }

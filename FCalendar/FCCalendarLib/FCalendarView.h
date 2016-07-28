@@ -30,7 +30,7 @@
 @property (strong, nonatomic) NSDate *dateSelected;
 @property (assign, nonatomic) BOOL showDayOff;
 @property (weak, nonatomic) id<FCalendarDelegate> delegate;
-- (id)initWithFrame:(CGRect)frame calendar:(NSCalendar*)calendar monthDisplay:(NSDate*)month dateSelected:(NSDate*)date showDayOff:(BOOL)showDayOff dayViewHeight:(CGFloat)height;
+- (void)setDataWithCalendar:(NSCalendar*)calendar monthDisplay:(NSDate*)month dateSelected:(NSDate*)date showDayOff:(BOOL)showDayOff dayViewHeight:(CGFloat)height;
 - (void)moveToNextMonth;
 - (void)moveToPreviousMonth;
 
